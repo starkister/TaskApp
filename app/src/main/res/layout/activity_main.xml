@@ -8,10 +8,43 @@
     android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
+    <LinearLayout
+        android:layout_height="40sp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="1000">
+
+        <TextView
+            android:id="@+id/category_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="400"
+            android:hint="カテゴリー"
+            android:textSize="14sp"
+            android:gravity="center"/>
+
+    <EditText
+        android:id="@+id/category_input_field"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hint="ここにカテゴリを入力"
+        android:textSize="14sp"
+        android:layout_weight="200"/>
+
+        <Button
+            android:id="@+id/category_apply_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="400"
+            android:text="絞り込む" />
+    </LinearLayout>
+
     <ListView
         android:id="@+id/listView1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_marginTop="40sp"
+        android:layout_below="@id/category_input_field" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

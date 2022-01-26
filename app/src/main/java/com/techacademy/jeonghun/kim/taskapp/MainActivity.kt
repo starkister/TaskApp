@@ -31,7 +31,16 @@ class MainActivity : AppCompatActivity() {
         fab.setOnClickListener { view ->
             val intent = Intent(this, InputActivity::class.java)
             startActivity(intent)
-            /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show()*/
+        }
+        category_apply_button.setOnClickListener{ view ->
+            //apply category
+            if(category_input_field.text == null || category_input_field.text.toString() == "")
+            {
+                reloadListView();
+            }
+            else {
+                reloadListView(category_input_field.text.toString())
+            }
         }
 
         // Realmの設定
@@ -96,6 +105,20 @@ class MainActivity : AppCompatActivity() {
     private fun reloadListView() {
         // Realmデータベースから、「すべてのデータを取得して新しい日時順に並べた結果」を取得
         val taskRealmResults = mRealm.where(Task::class.java).findAll().sort("date", Sort.DESCENDING)
+
+        // 上記の結果を、TaskListとしてセットする
+        mTaskAdapter.mTaskList = mRealm.copyFromRealm(taskRealmResults)
+
+        // TaskのListView用のアダプタに渡す
+        listView1.adapter = mTaskAdapter
+
+        // 表示を更新するために、アダプターにデータが変更されたことを知らせる
+        mTaskAdapter.notifyDataSetChanged()
+    }
+
+    private fun reloadListView(category:String){
+        // Realmデータベースから、「すべてのデータを取得して新しい日時順に並べた結果」を取得
+        val taskRealmResults = mRealm.where(Task::class.java).equalTo("category",category).findAll().sort("date", Sort.DESCENDING)
 
         // 上記の結果を、TaskListとしてセットする
         mTaskAdapter.mTaskList = mRealm.copyFromRealm(taskRealmResults)
